@@ -9,7 +9,7 @@ import discord4j.core.DiscordClient;
 @Configuration
 public class BotConfiguration {
 
-    @Value("${discord.bot.token}")
+    @Value("${DISCORD_BOT_TOKEN}")
     private String token;
 
     @Bean
