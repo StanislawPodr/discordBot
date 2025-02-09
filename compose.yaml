@@ -19,6 +19,8 @@ services:
       - mongodb
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/demo
+      - DISCORD_BOT_TOKEN=
+      - SPRING_AI_OPENAI_API_KEY=
     networks:
       - backend
 

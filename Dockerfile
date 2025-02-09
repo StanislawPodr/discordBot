@@ -1,5 +1,11 @@
 # syntax=docker/dockerfile:1
 
+FROM eclipse-temurin:21-jdk-jammy as git
+
+RUN apt-get update && apt-get install -y git
+RUN git clone https://github.com/StanislawPodr/discordBot.git
+
+
 # Comments are provided throughout this file to help you get started.
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/go/dockerfile-reference/
@@ -14,8 +20,8 @@ FROM eclipse-temurin:21-jdk-jammy as deps
 WORKDIR /build
 
 # Copy the mvnw wrapper with executable permissions.
-COPY --chmod=0755 mvnw mvnw
-COPY .mvn/ .mvn/
+COPY --from=git --chmod=0755 discordBot/mvnw mvnw
+COPY --from=git discordBot/.mvn/ .mvn/
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.m2 so that subsequent builds don't have to
@@ -35,8 +41,8 @@ FROM deps as package
 
 WORKDIR /build
 
-COPY src/ src/
-COPY pom.xml .
+COPY --from=git discordBot/src/ src/
+COPY --from=git discordBot/pom.xml .
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 \
     ./mvnw package -DskipTests && \

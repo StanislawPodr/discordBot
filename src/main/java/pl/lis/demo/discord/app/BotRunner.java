@@ -1,26 +1,21 @@
 package pl.lis.demo.discord.app;
 
-import discord4j.core.DiscordClient;
-import discord4j.core.GatewayDiscordClient;
-import jakarta.annotation.PostConstruct;
+import discord4j.discordjson.json.ApplicationCommandRequest;
+import discord4j.rest.RestClient;
 
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 public class BotRunner {
+    public BotRunner(RestClient restClient) {
+        ApplicationCommandRequest chatCommand = ApplicationCommandRequest.builder()
+                .name("chat")
+                .description("Rozpoczyna rozmowę z botem")
+                .build();
 
-    private final DiscordClient discordClient;
-
-    public BotRunner(DiscordClient discordClient) {
-        this.discordClient = discordClient;
-    }
-
-    @PostConstruct
-    public void startBot() {
-        discordClient.withGateway((GatewayDiscordClient gateway) -> {
-            // Możesz tu dodać logikę rejestracji zdarzeń itp.
-            return Mono.empty();
-        }).block();
+        restClient.getApplicationId()
+                .flatMap(appId -> restClient.getApplicationService()
+                        .createGlobalApplicationCommand(appId, chatCommand))
+                .subscribe();
     }
 }
