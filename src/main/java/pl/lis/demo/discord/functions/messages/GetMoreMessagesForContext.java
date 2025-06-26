@@ -1,4 +1,4 @@
-package pl.lis.demo.discord.functions;
+package pl.lis.demo.discord.functions.messages;
 
 import java.util.List;
 import java.util.function.Function;
@@ -6,11 +6,11 @@ import java.util.function.Function;
 import discord4j.common.util.Snowflake;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.object.entity.channel.MessageChannel;
-import pl.lis.demo.discord.functions.GetMoreMessagesForContext.DataForMoreMessages;
-import pl.lis.demo.discord.functions.GetMoreMessagesForContext.MoreMessages;
+import pl.lis.demo.discord.functions.messages.GetMoreMessagesForContext.DataForMoreMessages;
+import pl.lis.demo.discord.functions.messages.GetMoreMessagesForContext.MoreMessages;
 import pl.lis.demo.model.MessageData;
 
-public class GetMoreMessagesForContext implements Function<DataForMoreMessages, MoreMessages> {
+ class GetMoreMessagesForContext implements Function<DataForMoreMessages, MoreMessages> {
     public GetMoreMessagesForContext(GatewayDiscordClient client) {
         this.client = client;
     }

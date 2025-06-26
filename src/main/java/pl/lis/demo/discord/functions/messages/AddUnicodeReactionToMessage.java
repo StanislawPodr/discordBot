@@ -1,4 +1,4 @@
-package pl.lis.demo.discord.functions;
+package pl.lis.demo.discord.functions.messages;
 
 import java.util.function.Function;
 
@@ -6,7 +6,7 @@ import discord4j.common.util.Snowflake;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.object.reaction.ReactionEmoji;
 import discord4j.core.object.entity.channel.MessageChannel;
-import pl.lis.demo.discord.functions.AddUnicodeReactionToMessage.MessageDataForUnicodeReaction;
+import pl.lis.demo.discord.functions.messages.AddUnicodeReactionToMessage.MessageDataForUnicodeReaction;
 
 public class AddUnicodeReactionToMessage implements
         Function<MessageDataForUnicodeReaction, Void> {

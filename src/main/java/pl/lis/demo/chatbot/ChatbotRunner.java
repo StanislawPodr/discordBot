@@ -1,31 +1,25 @@
 package pl.lis.demo.chatbot;
 
+import discord4j.core.GatewayDiscordClient;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.ChatClient.CallResponseSpec;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.lis.demo.discord.functions.messages.MessagesInteractionFunctions;
 
 @Component
 public class ChatbotRunner {
 
-    public ChatbotRunner(ChatClient chatClient) {
+    private final ChatClient chatClient;
+    private final GatewayDiscordClient client;
+
+    @Autowired
+    public ChatbotRunner(ChatClient chatClient, GatewayDiscordClient client) {
         this.chatClient = chatClient;
+        this.client =  client;
     }
 
-    ChatClient chatClient;
-
-    public CallResponseSpec chatWithAllFunctions(String message) {
-        return chatClient
-                .prompt(new Prompt(message,
-                        OpenAiChatOptions.builder().function("writeMessageOnDiscordChannel")
-                                .function("addCustomReactionToMessage").function("addUnicodeReactionToMessage")
-                                .function("getGuildEmojiFunction").build()))
-                .call();
-    }
-
-    public ChatClient getChatClient() {
-        return chatClient;
+    public ChatClient.CallResponseSpec chatWithAllFunctions(String message) {
+        return chatClient.prompt(message).tools(new MessagesInteractionFunctions(client)).call();
     }
 
 }

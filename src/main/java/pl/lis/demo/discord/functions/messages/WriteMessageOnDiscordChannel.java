@@ -1,4 +1,4 @@
-package pl.lis.demo.discord.functions;
+package pl.lis.demo.discord.functions.messages;
 
 import java.util.function.Function;
 
@@ -6,7 +6,7 @@ import discord4j.common.util.Snowflake;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.spec.MessageCreateMono;
-import pl.lis.demo.discord.functions.WriteMessageOnDiscordChannel.MessageInput;
+import pl.lis.demo.discord.functions.messages.WriteMessageOnDiscordChannel.MessageInput;
 
 public class WriteMessageOnDiscordChannel implements Function<MessageInput, Void> {
     public WriteMessageOnDiscordChannel(GatewayDiscordClient client) {
